@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>DIR SCANNING COMPONENTS</title>
+</head>
+<body>
+<h1>DIR SCANNING COMPONENTS</h1>
+<p>These components will scan a given dir and generate an event each time
+a new file or directory is found or added. </p>
+<ul>
+  <li><i><code>TDADirScan</code></i> will just scan the directory</li>
+  <li><i><code>TDADirScanTreeView</code></i> will fill a treeview with its
+content</li>
+  <li><i><code>TDADirScanListView</code></i> will fill a listview</li>
+</ul>
+<p>You can subclass TDaDirScan if you want other components to be filled.</p>
+<p></p>
+This component will allow you to separate the content (in this case : file
+system) from the way it is represented (treeview, listview or other).
+<p></p>
+ 
+<h2>TSEARCHRECCLASS</h2>
+  <code>TSearchRecClass = class<br>
+     Time: Integer;<br>
+     Size: Integer;<br>
+     Attr: Integer;<br>
+     Name: String;<br>
+  end;<br>
+<br>
+<font face="Times New Roman, Times, serif">The data property is filled with
+a TSearchRecClass object</font><br>
+</code>
+<h2>FUNCTION TYPES </h2>
+<code>TDAFileFoundEvent = procedure(Sender : TObject; FileName : STring;
+ var CanAdd : boolean) of object;<br>
+TDAFileAddedEvent = procedure(Sender : TObject; FileName : STring) of object;<br>
+TDADirFoundEvent = procedure(Sender : TObject; DirName : String; var CanAdd
+: boolean) of object;<br>
+TDADirAddedEvent = procedure(Sender : TObject; DirName : String ) of object;<br>
+TDADirEndEvent = procedure(Sender : TObject; DirName : String;  FilesFound:
+integer) of object;<br>
+</code>
+<h2>TDADIRSCAN</h2>
+<h3>Properties</h3>
+<ul>
+  <li><code>Levels : integer</code> <br>
+  how deep the directory tree is scanned (<i>should be &gt;= 2 - if set too
+high may hang</i>)</li>
+  <li><code>RecursiveScan : boolean</code> <br>
+  whether the scan is recursive</li>
+  <li><code>AcceptedFiles : TStrings </code> <br>
+ File Extensions which are accepted (* = all) </li>
+  <li> <code>CompleteData : boolean </code> <br>
+ not used</li>
+  <li> <code>Directory : String (<i>runtime</i>) </code> <br>
+ Directory To Scan</li>
+</ul>
+<h3>Methods</h3>
+<ul>
+  <li><code>class function GetFirstDir(Dir : String) : String;</code> <br>
+ Gets first part of a directory</li>
+  <li><code>class function IsADir(Name : String) : boolean;</code> <br>
+ True if Name is&nbsp; a Directory</li>
+  <li><tt><code>procedure Reload;</code></tt></li>
+  <li><tt>procedure ClearAll;<br>
+    </tt>to clean up<tt><br>
+    </tt></li>
+</ul>
+<div align="Left"><br>
+</div>
+<h3>Events</h3>
+<ul>
+  <li><code>OnDirFound : TDADirFoundEvent; </code></li>
+  <li><code>OnDirAdded : TDADirAddedEvent; </code></li>
+  <li><code>OnFileFound : TDAFileFoundEvent; </code></li>
+  <li><code>OnFileAdded : TDAFileAddedEvent; </code></li>
+</ul>
+<h2>TDADIRSCANTREEVIEW = class(TDADIRSCAN)</h2>
+<p></p>
+The treenode data is filled with a string which contains the complete filename.
+You can get the other attributes using the function <code>GetSRForFile</code>
+<h3>Properties</h3>
+<ul>
+  <li><code>property EmptyDirs : boolean;</code> <br>
+ whether empty directories are shown</li>
+  <li><code>property TreeView : TTreeView;</code> <br>
+ TreeView that will be filled</li>
+</ul>
+<h3>Methods</h3>
+<ul>
+  <li><code>function GetFileNameAtNode(Node : TTreeNode) : String;</code>
+ </li>
+  <li><code>procedure FillNode(Node : TTreeNode; DirName : String);</code><br>
+ Insert this method in the OnExpanding event when <code>Levels</code> is
+set low</li>
+</ul>
+<h3>Events</h3>
+<ul>
+ 
+  <li><code>property OnDirEnd : TDADirEndEvent;</code></li>
+</ul>
+<h2>TDADIRSCANLISTVIEW = class(TDADIRSCAN)</h2>
+<p>The listitem data is filled with a string which contains the complete
+filename. You can get the other attributes using the function <code>GetSRForFile</code></p>
+<code>  TOnAddingSubItems = procedure (Sender : TObject; Item : TListItem;
+SRC : TSearchRecClass) of object;</code>
+<h3>Properties</h3>
+<ul>
+  <li><code>property ListView : TListView;</code> <br>
+ ListView that will be filled</li>
+</ul>
+<h3>Methods</h3>
+<ul>
+  <li><code>function GetFileNameForItem(ListItem : TListItem) : String;</code>
+ </li>
+</ul>
+<h3>Events</h3>
+<ul>
+ 
+  <li><code> OnAddingSubItems : TOnAddingSubItems;</code></li>
+</ul>
+<hr><i>Copyright 2000 by Diego Amicabile<br>
+<br>
+</i>
+</body>
+</html>

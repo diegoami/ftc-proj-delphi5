@@ -1,0 +1,377 @@
+<html>
+<head><Title>TTagNode Documentation</Title></head>
+<body bgcolor=#FFFFFF>
+<font face="tahoma, arial">
+<h2>TTagNode Documentation</h2>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Caption"></a>
+<tr><td bgcolor=#c0c0c0><b>Caption -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Caption : string;<br>
+<br>
+<ul>The Caption property will reflect the NodeType as follows:
+
+NodeType      Caption
+ntePCData     "PCDATA"
+nteComment    "!"
+nteDTDItem    Text that begins with "!"
+nteTag        Name of tag, "title" for example
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="ChildCount"></a>
+<tr><td bgcolor=#c0c0c0><b>ChildCount -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+ChildCount : integer;<br>
+<br>
+<ul>The number of child nodes the current node contains.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Children"></a>
+<tr><td bgcolor=#c0c0c0><b>Children -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Children[const Index : integer] : TTagNode;<br>
+<br>
+<ul>The list of TTagNodes that the current node owns.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Data"></a>
+<tr><td bgcolor=#c0c0c0><b>Data -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Data : TObject;<br>
+<br>
+<ul>The user may use the Data property as seen fit.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Find"></a>
+<tr><td bgcolor=#c0c0c0><b>Find -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function Find(const Tag : string) : integer;<br>
+<br>
+<ul>Returns the index of the first occurence of Tag in the Children of the current node.  This can be quite useful as an alternative to calling GetTags when the element being sought occurs only once in the children of a node.  For example, the HTML element should only occur once in a particular HTML document.  Likewise, there should only be one occurence each of HEAD and BODY within an HTML element.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1>function GetBodyTag(Tree : TTagNode) : TTagNode;
+
+// Return the body tag of a document (if it exists, nil otherwise)
+
+begin
+  Result := nil;
+
+  Index := Tree.Find('html');
+
+  If Index >= 0 then
+    with Tree.Children[Index] do
+      begin
+        Index := Find('body');
+
+        If Index >= 0 then
+          Result := Children[Index];
+
+      end;
+
+    end;
+
+end;
+</font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="GetPCData"></a>
+<tr><td bgcolor=#c0c0c0><b>GetPCData -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function GetPCData : string;<br>
+<br>
+<ul>Returns all text (PCDATA) associated with Node and all of its children. Note that this function will recurse through all children as well.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="GetTags"></a>
+<tr><td bgcolor=#c0c0c0><b>GetTags -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+procedure GetTags(const Tag: string; Items: TTagNodeList);<br>
+<br>
+<ul>Return all occurences of Tag that exist in the current nodes children. If Tag is not specified or is set to '*', then all child nodes will be returned.  Note that this call is recursive.  That is, it will seach through the children of the current node and in doing so, will search into their children and so on.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="GetTagsByParam"></a>
+<tr><td bgcolor=#c0c0c0><b>GetTagsByParam -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+procedure GetTagsByParam(const Tag: string; Items: TTagNodeList; const ParamName, ParamValue : string);<br>
+<br>
+<ul>Returns a list of nodes that match tag (or all nodes if '*' if specified for Tag).  Only those nodes which have a Parameter named ParamName with a value of ParamValue will be returned.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1>function GetStateSelect : TTagNode;
+
+// Return the 'SELECT' node whose name is 'state'.  Note that only
+// the first match is returned despite the fact that multiple matches
+// might be encountered.
+
+var
+  Nodes : TTagNodeList;
+
+begin
+  Nodes := TTagNodeList;
+  GetTagsByParam('select',Nodes,'name','state');
+
+  If Nodes.Count > 0 then
+    Result := Nodes[0]
+  else
+    Result := nil;
+
+  Nodes.Free;
+end;</font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="GetTagsByType"></a>
+<tr><td bgcolor=#c0c0c0><b>GetTagsByType -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+procedure GetTagsByType(const Tag: string; Items: TTagNodeList; NodeTypes : TNodeTypes);<br>
+<br>
+<ul>Returns a list of nodes that match tag (or all nodes if '*' if specified for Tag).  Only those nodes whose NodeType property is included in the NodeTypes set will be returned.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1>procedure GetAllPCData(Nodes : TTagNodeList);
+
+begin
+  If Assigned(Nodes) then
+    GetTagsByType('*',Nodes,[ntePCData]);
+end;</font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Index"></a>
+<tr><td bgcolor=#c0c0c0><b>Index -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Index : integer;<br>
+<br>
+<ul>Index of this node in Parent's children list.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="IsEmptyElement"></a>
+<tr><td bgcolor=#c0c0c0><b>IsEmptyElement -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+IsEmptyElement : boolean;<br>
+<br>
+<ul>Indicates whether this node can contain children.  &lt;IMG&gt; nodes, for example, cannot contain other elements according to the HTML 4.0 DTD.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Level"></a>
+<tr><td bgcolor=#c0c0c0><b>Level -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Level : integer;<br>
+<br>
+<ul>Level at which this node exists within the tree.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="NodeType"></a>
+<tr><td bgcolor=#c0c0c0><b>NodeType -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+NodeType : integer;<br>
+<br>
+<ul>Type of element to which the current node refers.  Will be one of the following: ntePCData, nteComment, nteDTDItem, nteTag.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Params"></a>
+<tr><td bgcolor=#c0c0c0><b>Params -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Params : TPairList;<br>
+<br>
+<ul>Represents the attributes of an HTML or XML tag element.  TPairList is inherited from TStringList and is accessed mainly via the Names and Values properties thereof (see TStringList for details).
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1>procedure GetImagePaths(Node : TTagNode; List : TStrings);
+
+begin
+  If Node.NodeType = nteTag then
+    If CompareText(Node.Caption,'img') = 0 then
+      List.Add(Node.Params.Values['src']);
+
+end;</font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Parent"></a>
+<tr><td bgcolor=#c0c0c0><b>Parent -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Parent : TTagNode;<br>
+<br>
+<ul>TTagNode that owns this one.  If the current node is a &lt;tr&gt;, then it's parent is likely to be a &lt;table&gt; node.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Render"></a>
+<tr><td bgcolor=#c0c0c0><b>Render -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function Render : string;<br>
+<br>
+<ul>Renders HTML from the elements contained within the current node. If no 
+alterations were made, the HTML content produced should match the source 
+content that was parsed. This is also quite useful when reflecting changes to a document. For example, changing all the &lt;img&gt; paths to reflect a local path.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Text"></a>
+<tr><td bgcolor=#c0c0c0><b>Text -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Text : string;<br>
+<br>
+<ul>Contains the text related to a PCData or Comment node.  The contents of the DTD items are also stored in the text property.  Note that the text associated with a tag will NOT be located in the tag's Text property.  For example, the text contained within a &lt;Title&gt; tag's open and end will be stored in a child node of type ntePCData.  See also GetPCData.
+
+</ul>
+<i>Example</i></font><br>
+<ul><pre>
+<font size=-1></font>
+</pre></ul>
+</td></tr>
+</table>
+<br>
+<br>
+
+<br>
+</font>
+</body>
+<html>

@@ -1,0 +1,70 @@
+; Creative Technology Ltd.
+;     Copyright (c) Creative Technology Ltd, 1994-1996.
+;
+; Description
+;	  This .inf files contains the following device for the installation
+;	  1. CTL7FFF					 => Reserved Device
+;
+; Date	   : 8th July '96
+; Revision : 2.01.000
+;
+
+
+[Version]
+Signature="$CHICAGO$"
+Class=CTRESERVE
+provider=%CREAF%
+
+[CTInfVersion]
+InfName=CTRESV.INF
+InfVersion=2.01
+
+[ClassInstall]
+Addreg=Class.AddReg
+
+[DestinationDirs]
+CTL7FFF.CopyList = 11			  ; LDID_SYS
+
+[SourceDisksFiles]
+ctresv.vxd=1
+
+[SourceDisksNames]
+1= %ID1%,,0000-0001
+
+[Class.AddReg]
+HKR,,,,%CreativeDeviceClass%
+HKR,,Icon,,"0"
+HKR,,NoUseClass,,1
+HKR,,NoInstallClass,,1
+HKR,,NoDisplayClass,,1
+HKR,,SilentInstall,,1
+
+[Manufacturer]
+%CLMfgName%=Creative
+
+[Creative]
+%*CTL7FFF.DeviceDesc% =CTL7FFF_Device,*CTL7FFF
+
+[PreCopySection]
+HKR,,NoSetupUI,,1
+
+[CTL7FFF_Device]
+CopyFiles=CTL7FFF.CopyList
+AddReg=CTL7FFF.AddReg
+
+[CTL7FFF.CopyList]
+ctresv.vxd,,
+
+[CTL7FFF.AddReg]
+HKR,,DeviceDriver,,ctresv.vxd
+HKR,,DevLoader,,*CONFIGMG
+
+;---------------------------------------------------------------;
+
+[Strings]
+;Localized strings
+CREAF="Creative"
+CLMfgName="Creative"
+*CTL7FFF.DeviceDesc="Creative Reserved Device"
+CreativeDeviceClass="Creative devices"
+ID1="Creative Drivers Disk"

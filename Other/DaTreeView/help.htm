@@ -1,0 +1,53 @@
+<!DOCTYPE HTML public "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>TDATREEVIEW</TITLE>
+
+
+</HEAD>
+<BODY>
+<h1>TDATREEVIEW</h1>
+
+<p>This component extends the ordinary treeview with some properties, methods and events to 
+encapsulate cut & paste, drag & drop. </p>
+
+
+
+
+<h2>TYPES </h2>
+<code>
+
+TOnDragNodeEvent = procedure(Sender : TObject; Source, Destination : TTreeNode) of object;<br>
+
+</code>
+
+
+<h2>TDATREEVIEW</h2>
+
+<h3>Additional Properties</h3>
+<ul>
+<li><code>DragDropEnabled : boolean</code> <br>When this is true, drag & drop will happen automatically
+<li><code>CustomDragDrop : Boolean</code> <br>Whether the program will handle OnDragNode events
+</ul>
+
+<h3>Additional Methods</h3>
+<ul>
+<li><code> procedure CutNode(Node : TTreeNode);</code> 
+<li><code> procedure CutNodes(Node : TTreeNode);</code> 
+<li><code> procedure DeleteNode(Node : TTreeNode);</code> 
+<li><code> procedure PasteNodeAt(Node : TTreeNode);</code> <br>Adds the formerly cut node(s) at the Node TTreeNode
+</ul>
+
+<h3>Additional Events</h3>
+<ul>
+<li><code>property OnDeleteNode : TTVChangedEvent;</code><br> Should handle the Data property for the node which is being deleted
+<li><code>property OnDragNodeEvent : TOnDragNodeEvent read FOnDragNodeEvent write FOnDragNodeEvent;</code> 
+<br>Fired whenever drag & drop happens inside in the treeview if CustomDragDrop is true
+
+<hr>
+<i>Copyright 2000-1 by Diego Amicabile
+
+
+</BODY>
+
+</HTML>

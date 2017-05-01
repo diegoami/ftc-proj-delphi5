@@ -1,0 +1,48 @@
+[DSP upload]
+File Name=dauninst.zip
+Replace File=
+File Status=Freeware
+Full Source Included=Y
+Version=1.0
+count=9
+1=<P>A simple way to package your application with an uninstaller. Just
+2=create a batch file with whatever icon you want and let it execute
+3=this single command</P>
+4=
+5=<PRE>
+6=dauninst &lt;application&gt;
+7=</PRE>
+8=
+9=<P>the application will be uninstalled from your computer.</P>
+Note=
+Additional info=
+Category=Installation
+Platform=Windows 95/98/NT
+Group=Tools
+Delphi 1.0x=N
+Delphi 2.0x=N
+Delphi 3.0x=N
+Delphi 4.0x=N
+Delphi 5.0x=N
+C++ Builder 1.0x=N
+C++ Builder 3.0x=N
+C++ Builder 4.0x=N
+[DSP Support]
+DSP Support=Y
+[Uploader_1]
+Author name=Diego Amicabile
+Contact=
+Author E-mail=diegoami@yahoo.it
+Author URL=http://www.geocities.com/diegoami
+count=0
+Author Section=VCL creator
+UpdateDSP=N
+[Versions available]
+Delphi 1.0x=
+Delphi 2.0x=
+Delphi 3.0x=
+Delphi 4.0x=
+Delphi 5.0x=
+C++ Builder 1.0x=
+C++ Builder 3.0x=
+C++ Builder 4.0x=

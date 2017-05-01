@@ -1,0 +1,133 @@
+<html>
+<head><Title>THTMLParser Documentation</Title></head>
+<body bgcolor=#FFFFFF>
+<font face="tahoma, arial">
+<h2>THTMLParser Documentation</h2>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Clear"></a>
+<tr><td bgcolor=#c0c0c0><b>Clear -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+procedure Clear;<br>
+<br>
+<ul>Clears the contents of the Tree property.  Considering the fact that the parsed contents can be quite large, calling the Clear method once the contents are no longer necessary will free up considerable resources.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="OnHTMLTag"></a>
+<tr><td bgcolor=#c0c0c0><b>OnHTMLTag -
+Event</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+OnHTMLTag(Sender : TObject; ANode : THierarchyNode);<br>
+<br>
+<ul>Fired each time a tag (and all of its contained elements) is parsed from the document. ANode.Caption will contain the name of the tag (i.e. "table" for a &lt;table&gt; tag). Note that the event will not necessarily fire in the linear order in which the tags occur within the HTML or XML content. For example, the OnHTMLTag event for the &lt;td&gt; tags with a &lt;table&gt; will fire prior to the enclosing &lt;table&gt; tag.  This is due to the fact that the event fires only when a node's children are completely parsed as well.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+procedure TForm1.HTMLParser1HTMLTag(Sender: TObject; ANode: TTagNode);
+begin
+  If ANode.NodeType = ntePCData then
+    ANode.Text := HTMLDecode(ANode.Text);      // HTMLDecode all PCData while parsing
+
+end;
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="OnSyntaxWarning"></a>
+<tr><td bgcolor=#c0c0c0><b>OnSyntaxWarning -
+Event</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+procedure(Sender : TObject; Text : string)<br>
+<br>
+<ul>Triggered each time a syntax error is occurred.  Note that parsing continues despite having encountered an exception.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+procedure TForm1.HTMLParser1SyntaxWarning(Sender: TObject; Text: String);
+begin
+  SyntaxErrors.Add(Text);     // Where SyntaxErrors is a TStringList
+  
+end;
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Parse"></a>
+<tr><td bgcolor=#c0c0c0><b>Parse -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+procedure Parse(const Text : string);<br>
+<br>
+<ul>Called to trigger parsing of the document. Text is the html or xml content to be parsed.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+procedure ParseTheFile(Filename : string);
+
+var
+  HTML : TStringList;
+
+begin
+  HTML := TStringList.Create;
+  HTML.LoadFromFile(Filename);
+
+  HTMLParser1.Parse(HTML.Text);
+
+  HTML.Free;
+
+end;
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Tree"></a>
+<tr><td bgcolor=#c0c0c0><b>Tree -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Tree : TTagNode<br>
+<br>
+<ul>Root level TTagNode of parsed HTML or XML content.  This node actually represents the Document level of the parsed content.  For example, if properly defined HTML document was parsed, Tree is likely to contain one node: &lt;html&gt;.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+procedure GenHTML;
+
+var
+  HTML : TStringList;
+
+begin
+  HTML : TStringList.Create;
+  HTML.Text := HTMLParser1.Tree.Render;
+  HTML.SaveToFile('c:\test.htm');
+end;
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+
+<br>
+</font>
+</body>
+</html>

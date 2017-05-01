@@ -1,0 +1,100 @@
+; Creative Technology Ltd.
+;     Copyright (c) Creative Technology Ltd, 1994-1996.
+;
+; Description
+;	  This .inf files contains the following device for the installation
+;	  1. CTL2011					 => IDE CD-ROM Interface
+;	  2. CTL2012					 => IDE CD-ROM Interface
+;
+; Date	   : 8th July '96
+; Revision : 1.02.000
+;
+
+
+[Version]
+Signature="$CHICAGO$"
+Class=Adapter
+Provider=%CREAT%
+LayoutFile=layout.inf
+
+[CTInfVersion]
+InfName=SBIDE.INF
+InfVersion=1.02
+
+[ClassInstall]
+Addreg=AdapterReg
+
+[AdapterReg]
+HKR,,,,%AdapterClassName%
+HKR,,Icon,,-9
+
+[Manufacturer]
+%Creative%=Creative
+
+[Creative]
+%*CTL2011.DeviceDesc%=SBIDE,*CTL2012
+%*CTL2011.DeviceDesc%=SBIDE,*CTL2011
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Creative Driver Installation Sections ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[SBIDE]
+LogConfig=*CTL2011.LogConfig
+CopyFiles=CTL2011.Copylist
+AddReg=IOS,CanPoll,sbide.reg
+
+[SBIDE.FactDef]
+ConfigPriority=HARDRECONFIG
+IRQconfig=11
+IOConfig=1e8-1ef
+
+[sbide.reg]
+HKR,,PortDriver,,sbide.mpd
+HKR,,ForceLoadPD,1,01
+
+;;;;;;;;;;;;;;;;;;;;;
+; HARDWARE SECTIONS ;
+;;;;;;;;;;;;;;;;;;;;;
+
+[*CTL2011.Det]
+AddReg=ForceInstall
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;  Configuration 
+;;;;;;;;;;;;;;;;;;;;;;;;
+[*CTL2011.LogConfig]
+ConfigPriority=HARDRECONFIG
+IRQconfig=10,11,12,15
+IOConfig=1e8-1ef, 168-16f
+
+[ForceInstall]
+HKR,,NoSetupUI,,1
+
+[CTL2011.Copylist]
+sbide.mpd,,
+
+;******************************** Common section
+[IOS]
+HKR,,DevLoader,,*IOS
+HKR,,DontLoadIfConflict,,"Y"
+HKR,,PollingSupportNeeded,1,01
+
+[CanPoll]
+HKR,,Polling,,1
+
+[SourceDisksFiles]
+sbide.mpd = 1
+
+[SourceDisksNames]
+1 = %ID1%,,0000-0001
+
+[DestinationDirs]
+DefaultDestDir = 12             ; IOSubsys directory
+
+[Strings]
+CREAT="Creative"
+AdapterClassName="CD-ROM controllers"
+Creative="Creative"
+*CTL2011.DeviceDesc="Creative IDE CD-ROM Drive"
+ID1 = "Creative Driver Disk"

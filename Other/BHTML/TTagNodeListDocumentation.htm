@@ -1,0 +1,118 @@
+<html>
+<head><Title>TTagNodeList Documentation</Title></head>
+<body bgcolor=#FFFFFF>
+<font face="tahoma, arial">
+<h2>TTagNodeList Documentation</h2>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Count"></a>
+<tr><td bgcolor=#c0c0c0><b>Count -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Count : integer;<br>
+<br>
+<ul>Returns the number of items in the list.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="FindTagByIndex"></a>
+<tr><td bgcolor=#c0c0c0><b>FindTagByIndex -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function FindTagByIndex(const Tag: string; const Index: integer): TTagNode;<br>
+<br>
+<ul>Returns the Index'th node from the list whose caption (tag name) matches Tag.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="GetTagCount"></a>
+<tr><td bgcolor=#c0c0c0><b>GetTagCount -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function GetTagCount(const Tag: string): integer;<br>
+<br>
+<ul>Indicates the number of occurences of the specified tag name that exist in the list.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="IndexOf"></a>
+<tr><td bgcolor=#c0c0c0><b>IndexOf -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function IndexOf(Item : TTagNode) : integer;<br>
+<br>
+<ul>Indicates the node's position in the list.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Items"></a>
+<tr><td bgcolor=#c0c0c0><b>Items -
+Property</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+Items[Index : integer] : TTagNode;<br>
+<br>
+<ul>Returns the Index'th TTagNode from the list or nil if Index is invalid.  This is the default property.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+<table bgcolor=#e0e0e0 width=600 border=0 cellpadding=4>
+<a name="Occurence"></a>
+<tr><td bgcolor=#c0c0c0><b>Occurence -
+Method</b></td></tr>
+<tr><td><font face="tahoma, arial" size=-1>
+function Occurence(Node: TTagNode): integer;<br>
+<br>
+<ul>Indicates which occurence the node is of it's tag name within the list.
+
+</ul>
+<i>Example</i><br>
+<ul><pre>
+
+</pre></ul>
+</font></td></tr>
+</table>
+<br>
+<hr color=#000000 size=2 noshade><br>
+
+<br>
+</font>
+</body>
+</html>
